@@ -52,9 +52,13 @@ client.on('interactionCreate', async interaction => {
     await interaction.reply(text.value);
   } else if (interaction.commandName === "webhooksend") {
     const cont = getIntOption(interaction,0).value;
-    const usern = getIntOption(interaction,1) ? getIntOption(interaction,1).value : "Jennifer Juniper";
-    const avatar = getIntOption(interaction, 2) ? (getIntOption(interaction, 2).value) : "https://images-ext-1.discordapp.net/external/A2wjggCFcu0g2vBts4wqO71sJ37xB43smDdDQE5GLHQ/https/media.discordapp.net/attachments/906768055311401013/907354948415651920/bunny.gif?width=94&height=94";
-    // console.log(cont,usern,avatar)
+    let usern = getIntOption(interaction,1) ? getIntOption(interaction,1).value : "Jennifer Juniper";
+    let avatar = getIntOption(interaction, 2) && isValidUrl(getIntOption(interaction, 2).value) ? getIntOption(interaction, 2).value : "https://images-ext-1.discordapp.net/external/A2wjggCFcu0g2vBts4wqO71sJ37xB43smDdDQE5GLHQ/https/media.discordapp.net/attachments/906768055311401013/907354948415651920/bunny.gif?width=94&height=94";
+    if (getIntOption(interaction,1)? getIntOption(interaction,1).name === "avatar":false) {
+      avatar=getIntOption(interaction,1).value;
+      usern="Jennifer Juniper";
+    } // dont feel like making this more efficient (nevermind the fact that i can hardly wrpa my fucking head around it) BUG
+    // console.log(getIntOption(interaction,1).name,getIntOption(interaction,1).name === "avatar")
     console.log(interaction.options._hoistedOptions)
     await webhookClient.send({
       content: cont,
